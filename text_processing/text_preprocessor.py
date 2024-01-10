@@ -17,12 +17,12 @@ class TextPreprocessor:
         self.remove_numbers_flag = remove_numbers
         self.remove_stopwords_flag= remove_stopwords_flag
 
-    def perform_stemming(text):
+    def perform_stemming(self,text):
         if isinstance(text, list):
             stemmer = PorterStemmer()
             return [stemmer.stem(word) for word in text]
 
-    def perform_lemmatization(text):
+    def perform_lemmatization(self,text):
         if isinstance(text, list):
             lemmatizer = WordNetLemmatizer()
             return [lemmatizer.lemmatize(word) for word in text]
@@ -37,7 +37,14 @@ class TextPreprocessor:
     def remove_stopwords(self, text):
         if isinstance(text, list):
             stop_words = set(stopwords.words('english'))
-            return ' '.join([word for word in text if word.lower() not in stop_words])
+            return [word for word in text if word.lower() not in stop_words]    
+        
+    def remove_stopwords2(self,text):
+        if not isinstance(text, list):
+            raise ValueError("Input should be a list of words")
+        
+        stop_words = set(stopwords.words('english'))
+        return [word for word in text if word.lower() not in stop_words]
 
     def convert_to_lowercase(self, text):
         if isinstance(text, str):
@@ -63,15 +70,19 @@ class TextPreprocessor:
 
     def remove_users(self, text):
         if isinstance(text, str):
-            return re.sub(r'@\S+', '', text)
+            return re.sub(r'@\S+', '', text)        
 
-    def remove_hastags(self, text):
+    def remove_hastags(self,text):
         if isinstance(text, str):
             return re.sub(r'#\S+', '', text)
+        else:
+            return text
 
     def remove_links(self, text):
         if isinstance(text, str):
             return re.sub(r'http\S+', '', text)
+        else:
+            return text
 
     def tokenize_text(self, text):
         return word_tokenize(text)

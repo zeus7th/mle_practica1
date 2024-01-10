@@ -1,5 +1,7 @@
 import pytest
-from processing import *
+from text_processing.text_preprocessor import *
+
+procesador = TextPreprocessor()
 
 @pytest.mark.parametrize("text, expected", [
     ("Hi How are you!$%&/()", "Hi How are you"),
@@ -8,7 +10,7 @@ from processing import *
     
 ])
 def test_remove_characters(text, expected):
-    assert remove_characters(text) == expected
+    assert procesador.remove_characters(text) == expected
 
 @pytest.mark.parametrize("text, expected", [
     (['I','like','playing','computer','games'], [ 'like', 'playing', 'computer', 'games']),
@@ -17,7 +19,7 @@ def test_remove_characters(text, expected):
     
 ])
 def test_remove_stopwords(text, expected):
-    assert remove_stopwords(text) == expected
+    assert procesador.remove_stopwords(text) == expected
 
 
 @pytest.mark.parametrize("text, expected", [
@@ -27,7 +29,7 @@ def test_remove_stopwords(text, expected):
     
 ])
 def test_convert_to_lowercase(text, expected):
-    assert convert_to_lowercase(text) == expected
+    assert procesador.convert_to_lowercase(text) == expected
 
 @pytest.mark.parametrize("text, expected", [
     ("🌟Just finished an amazing workout session! Feeling so energized and ready to conquer the day!💪", "Just finished an amazing workout session! Feeling so energized and ready to conquer the day!"),
@@ -36,7 +38,7 @@ def test_convert_to_lowercase(text, expected):
    
 ])
 def test_remove_emojis(text, expected):
-    assert remove_emojis(text) == expected
+    assert procesador.remove_emojis(text) == expected
 
 @pytest.mark.parametrize("text, expected", [
     ("Stuck in traffic  again...  why  does  this", "Stuck in traffic again... why does this"),
@@ -44,7 +46,7 @@ def test_remove_emojis(text, expected):
     ("There's  nothing  like a  peaceful morning", "There's nothing like a peaceful morning"),
 ])
 def test_remove_extra_spaces(text, expected):
-    assert remove_extra_spaces(text) == expected
+    assert procesador.remove_extra_spaces(text) == expected
 
 @pytest.mark.parametrize("text, expected", [
     ("123abc456def789", "abcdef"),
@@ -53,7 +55,7 @@ def test_remove_extra_spaces(text, expected):
     # Add more test cases here for remove_numbers
 ])
 def test_remove_numbers(text, expected):
-    assert remove_numbers(text) == expected
+    assert procesador.remove_numbers(text) == expected
 
 @pytest.mark.parametrize("text, expected", [
     ("Just had an amazing brainstorming session with @TechInnovator21! Their innovative ideas are always inspiring. 💡🚀 #Collaboration #Innovation","Just had an amazing brainstorming session with  Their innovative ideas are always inspiring. 💡🚀 #Collaboration #Innovation"),
@@ -61,7 +63,7 @@ def test_remove_numbers(text, expected):
     ("Had a fantastic interview with @MusicMaestro88! Their passion for music truly shines through. 🎶🎤 #MusicalGenius #InterviewInsights","Had a fantastic interview with  Their passion for music truly shines through. 🎶🎤 #MusicalGenius #InterviewInsights")
 ])
 def test_remove_users(text, expected):
-    assert remove_users(text) == expected
+    assert procesador.remove_users(text) == expected
 
 @pytest.mark.parametrize("text, expected", [
     ("Exploring new heights 🏞️ #AdventureTime #PeakViews", "Exploring new heights 🏞️  "),
@@ -70,7 +72,7 @@ def test_remove_users(text, expected):
 
 ])
 def test_remove_hastags(text, expected):
-    assert remove_hastags(text) == expected
+    assert procesador.remove_hastags(text) == expected
 
 @pytest.mark.parametrize("text, expected", [
     ("This is a link: https://example.com", "This is a link: "),
@@ -78,12 +80,12 @@ def test_remove_hastags(text, expected):
     # Add more test cases here for remove_links
 ])
 def test_remove_links(text, expected):
-    assert remove_links(text) == expected
+    assert procesador.remove_links(text) == expected
     
 def test_remove_stopwords_invalid_input():
     invalid_input = "This is a string, not a list"
     with pytest.raises(ValueError):
-        remove_stopwords2(invalid_input)
+        procesador.remove_stopwords2(invalid_input)
 
 
 @pytest.mark.parametrize("text, expected", [
@@ -92,7 +94,7 @@ def test_remove_stopwords_invalid_input():
 ])
 
 def test_perform_lemmatization(text,expected):
-    assert perform_lemmatization(text) == expected
+    assert procesador.perform_lemmatization(text) == expected
 
 @pytest.mark.parametrize("text, expected", [
     (['I','like','playing','computer','games'], ['i', 'like', 'play', 'comput', 'game']),
@@ -100,7 +102,7 @@ def test_perform_lemmatization(text,expected):
 ])
 
 def test_perform_steming(text,expected):
-    assert perform_stemming(text) == expected
+    assert procesador.perform_stemming(text) == expected
 
 
 if __name__ == "__main__":

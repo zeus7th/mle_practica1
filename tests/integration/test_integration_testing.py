@@ -1,5 +1,8 @@
 import pytest
-from processing import remove_links,remove_hastags,remove_numbers,remove_users
+from text_processing.text_preprocessor  import *
+
+
+procesador = TextPreprocessor()
 
 @pytest.mark.parametrize(
     "input_text, expected_output",
@@ -10,7 +13,7 @@ from processing import remove_links,remove_hastags,remove_numbers,remove_users
     ],
 )
 def test_remove_hashtags_and_links(input_text, expected_output):
-    processed_text = remove_hastags(remove_links(input_text))
+    processed_text = procesador.remove_hastags(procesador.remove_links(input_text))
     assert processed_text == expected_output
     
     
@@ -21,5 +24,5 @@ def test_remove_hashtags_and_links(input_text, expected_output):
     ("@user1 @user2 @user3", '  '),
 ])
 def test_remove_numbers_and_users(input_text, expected_output):
-    processed_text = remove_numbers(remove_users(input_text))
+    processed_text = procesador.remove_numbers(procesador.remove_users(input_text))
     assert processed_text == expected_output
